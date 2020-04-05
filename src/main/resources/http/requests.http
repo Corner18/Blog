@@ -1,0 +1,88 @@
+
+
+
+POST http://localhost:8080/api/registration
+Content-Type: application/json
+
+{
+  "email" : "egorowanastena@mail.ru",
+  "password": "nastya",
+  "name" : "nastya",
+  "phoneNumber" : "79172588896"
+}
+
+###
+
+GET http://localhost:8080/api/confirm/4f9c84f0-eef8-4835-a21f-01121958d952
+
+###
+
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email" : "egorowanastena@mail.ru",
+  "password": "nastya"
+}
+
+###
+
+GET http://localhost:8080/api/profile
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+
+###
+
+
+POST http://localhost:8080/api/files
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+accept: */*
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="French-Revolution.jpg"
+
+< ./French-Revolution.jpg
+--WebAppBoundary--
+
+###
+
+GET http://localhost:8080/api/files/bd4fcc71-5a88-4b9d-9ffb-40b492ef0f5c.jpg
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+
+###
+
+POST http://localhost:8080/api/add
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+Content-Type: application/json
+
+{
+  "header" : "homework",
+  "text" : "disgusting"
+}
+
+###
+
+GET http://localhost:8080/api/favourites
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+
+###
+
+POST http://localhost:8080/api/like/1
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+
+###
+
+POST http://localhost:8080/api/comment/1
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+Content-Type: application/json
+
+{
+  "text" : "really bullshit"
+}
+
+###
+
+GET http://localhost:8080/api/post/1
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwibmFtZSI6Im5hc3R5YSIsInJvbGUiOiJVU0VSIn0.L2P19xLCMezZSoIuVfbkZBYnYMxWW-jGGzNif6ae3Qg
+
+###
