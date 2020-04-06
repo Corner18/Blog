@@ -7,10 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.itis.blog.models.State;
 import ru.itis.blog.models.User;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Builder
 public class UserDetailsImpl implements UserDetails {
@@ -23,6 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     private Long userId;
     private String role;
     private String name;
+
 
     public Long getUserId() {
         return userId;

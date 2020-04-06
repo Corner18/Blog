@@ -2,6 +2,7 @@ package ru.itis.blog.security.provider;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -24,11 +25,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     @Value("${jwt.secret}")
     private String secret;
 
+    @Autowired
     private UsersRepository usersRepository;
-
-    public JwtAuthenticationProvider(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
-    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -43,7 +41,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
             throw new AuthenticationCredentialsNotFoundException("Bad token");
         }
         // создаем UserDetails
-        System.out.println(Long.parseLong(claims.get("sub", String.class)));
+       // System.out.println(Long.parseLong(claims.get("sub", String.class)));
         //Optional<User> user = usersRepository.find(Long.parseLong(claims.get("sub", String.class)));
         UserDetailsImpl userDetails = UserDetailsImpl.builder()
                 .user(usersRepository.find(Long.parseLong(claims.get("sub", String.class))).get())
@@ -55,7 +53,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         authentication.setAuthenticated(true);
         // положили в эту аутентификацию пользователя
         ((JwtAuthentication)authentication).setUserDetails(userDetails);
-        System.out.println(authentication.toString());
+        //System.out.println(authentication.toString());
         return authentication;
     }
 

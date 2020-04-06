@@ -32,7 +32,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public ModelAndView login(HttpServletResponse response, LoginDto loginDto) {
+    public ModelAndView login(HttpServletResponse response, LoginDto loginDto) throws IOException {
         TokenDto tokenDto = loginService.login(loginDto);
         Cookie cookie = new Cookie("MyToken", tokenDto.getToken());
         response.addCookie(cookie);

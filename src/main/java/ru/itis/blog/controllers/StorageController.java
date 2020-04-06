@@ -2,11 +2,14 @@ package ru.itis.blog.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import ru.itis.blog.models.User;
 import ru.itis.blog.repositories.jdbc.UsersRepository;
 import ru.itis.blog.security.details.UserDetailsImpl;
 import ru.itis.blog.services.FileStorageService;
@@ -24,7 +27,7 @@ public class StorageController {
     private FileStorageService service;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UsersService usersService;
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/storage", method = RequestMethod.GET)
@@ -36,8 +39,11 @@ public class StorageController {
     @RequestMapping(value = "/files", method = RequestMethod.POST)
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response) throws IOException {
-        service.saveFile(file, usersRepository.find(userDetails.getUser().getId()).get());
+    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+        User user = usersService.getUser(userDetails.getUserId());
+        service.saveFile(file, user);
         return new ModelAndView("redirect:/profile");
     }
 

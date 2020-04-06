@@ -1,6 +1,7 @@
 package ru.itis.blog.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,13 +25,13 @@ public class UserController {
     @Autowired
     private UsersService usersService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ModelAndView getUsersProfile(Authentication authentication) {
-        if (authentication != null) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-            return new ModelAndView("profile", "user",
-                    usersService.getUser(userDetails.getUserId()));
-        }
-        return new ModelAndView("redirect:/login");
+    public ModelAndView getUsersProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+        User user = usersService.getUser(userDetails.getUserId());
+        return new ModelAndView("profile", "user", user);
     }
+
 }
