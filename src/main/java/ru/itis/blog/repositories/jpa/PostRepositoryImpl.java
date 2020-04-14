@@ -27,7 +27,6 @@ public class PostRepositoryImpl implements PostRepository {
     @Transactional
     public void save(Post post) {
         entityManager.persist(post);
-        System.out.println("post");
     }
 
     @Override

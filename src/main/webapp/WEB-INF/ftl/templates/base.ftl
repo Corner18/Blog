@@ -14,6 +14,11 @@
                 <a href="/profile" class="btn btn-light">Profile</a>
                 <a href="/add" class="btn btn-light">Add post</a>
                 <a href="/logout" class="btn btn-light">Logout</a>
+                <a href="/support" class="btn btn-light">Support</a>
+                <#if user.role == "ADMIN">
+                    <a href="/admin" class="btn btn-light">ADMIN</a>
+                </#if>
+
             <#else>
                 <a href="/login" class="btn btn-light">Login</a>
             </#if>

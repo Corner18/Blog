@@ -14,6 +14,7 @@ import ru.itis.blog.dto.CommentDto;
 import ru.itis.blog.dto.LikeDto;
 import ru.itis.blog.models.User;
 import ru.itis.blog.security.details.UserDetailsImpl;
+import ru.itis.blog.services.CommentService;
 import ru.itis.blog.services.FileStorageService;
 import ru.itis.blog.services.PostService;
 import ru.itis.blog.services.UsersService;
@@ -33,43 +34,21 @@ public class PostController {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private CommentService commentService;
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/{post_id}")
-    public ModelAndView getPostPage(@PathVariable("post_id") Long post_id, HttpServletRequest request) {
+    public ModelAndView getPostPage(@PathVariable("post_id") Long post_id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
         User user = usersService.getUser(userDetails.getUserId());
-        HttpSession session = request.getSession();
-        session.setAttribute("post_id", post_id);
         Map<String, Object> params = new HashMap<>();
-        params.put("comments", postService.userComment(post_id));
+        params.put("comments", commentService.userComment(post_id));
         params.put("user", user);
         params.put("post", postService.getOne(post_id));
         return new ModelAndView("post", params);
 
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/post")
-    public ModelAndView makeComment(CommentDto form, HttpServletRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        form.setUser_id(userDetails.getUserId());
-        form.setPost_id(Long.parseLong(String.valueOf(request.getSession().getAttribute("post_id"))));
-        postService.makeComment(form);
-        String id = String.valueOf(request.getSession().getAttribute("post_id"));
-        return new ModelAndView("redirect:/post/" + id);
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/like")
-    public ModelAndView makeLike(HttpServletRequest request, LikeDto form) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        form.setPost_id(Long.parseLong(String.valueOf(request.getSession().getAttribute("post_id"))));
-        form.setUser_id(userDetails.getUserId());
-        postService.makeLike(form);
-        String id = String.valueOf(request.getSession().getAttribute("post_id"));
-        return new ModelAndView("redirect:/post/" + id);
-    }
 }

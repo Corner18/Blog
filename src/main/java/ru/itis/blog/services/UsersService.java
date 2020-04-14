@@ -12,4 +12,6 @@ public interface UsersService {
 
     User getUser(Long userId);
 
+    User getAdmin();
+
 }

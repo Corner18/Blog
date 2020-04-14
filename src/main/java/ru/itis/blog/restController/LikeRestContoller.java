@@ -1,34 +1,33 @@
 package ru.itis.blog.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.itis.blog.models.Post;
-import ru.itis.blog.models.User;
+import ru.itis.blog.dto.LikeDto;
 import ru.itis.blog.security.details.UserDetailsImpl;
-import ru.itis.blog.services.FavouritesService;
-import ru.itis.blog.services.UsersService;
-
-import java.util.List;
+import ru.itis.blog.services.LikeService;
 
 @RestController
-@RequestMapping("/api/favourites")
-public class FavouritePostsRestController {
+public class LikeRestContoller {
 
     @Autowired
-    private FavouritesService favouritesService;
+    private LikeService likeService;
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping
-    public ResponseEntity<List<Post>> getFavouritePosts(){
+    @PostMapping("/api/like/{post_id}")
+    public ResponseEntity<?> makeLike(@PathVariable("post_id") Long post_id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        return new ResponseEntity<>(favouritesService.favs(userDetails.getUserId()), HttpStatus.OK);
+        LikeDto likeDto = LikeDto.builder()
+                .post_id(post_id)
+                .user_id(userDetails.getUserId())
+                .build();
+        likeService.makeLike(likeDto);
+        return ResponseEntity.accepted().build();
     }
 }

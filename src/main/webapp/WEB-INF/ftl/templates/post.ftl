@@ -43,14 +43,14 @@
                 <hr>
 
                 <#if user??>
-                    <form action="/like" method="post">
+                    <form action="/like/{post.id}" method="post">
                         <input type="submit" class="btn btn-light" value="like" style="width: 100px">
                     </form>
                     <!-- Comments Form -->
                     <div class="card my-4">
                         <h5 class="card-header">Leave a Comment:</h5>
                         <div class="card-body">
-                            <form method="post" action="/post">
+                            <form method="post" action="/comment/{post.id}">
                                 <div class="form-group">
                                     <textarea class="form-control" rows="3" name="comment"></textarea>
                                 </div>

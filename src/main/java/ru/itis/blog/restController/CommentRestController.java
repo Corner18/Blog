@@ -1,37 +1,35 @@
 package ru.itis.blog.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.itis.blog.dto.PostDto;
-import ru.itis.blog.models.User;
+import ru.itis.blog.dto.CommentDto;
 import ru.itis.blog.security.details.UserDetailsImpl;
-import ru.itis.blog.services.AddPostService;
-import ru.itis.blog.services.UsersService;
+import ru.itis.blog.services.CommentService;
 
 @RestController
-@RequestMapping("/api/add")
-public class AddingPostRestController {
+public class CommentRestController {
 
     @Autowired
-    private AddPostService addPostService;
-
-    @Autowired
-    private UsersService usersService;
+    private CommentService commentService;
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping
-    public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
+    @PostMapping("/api/comment/{post_id}")
+    public ResponseEntity<?> makeComment(@RequestParam(value = "text") String text, @PathVariable("post_id") Long post_id){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        addPostService.save(postDto, userDetails.getUserId());
+        CommentDto commentDto = CommentDto.builder()
+                .comment(text)
+                .post_id(post_id)
+                .user_id(userDetails.getUserId())
+                .build();
+        commentService.makeComment(commentDto);
         return ResponseEntity.accepted().build();
     }
 }

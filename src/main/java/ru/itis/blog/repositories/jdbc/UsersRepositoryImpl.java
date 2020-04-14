@@ -31,6 +31,10 @@ public class UsersRepositoryImpl implements UsersRepository {
             "select * from itis_user where email = ? ;";
 
     //language=SQL
+    private static final String SQL_SELECT_BY_ROLE =
+            "select * from itis_user where role = ? ;";
+
+    //language=SQL
     private static final String SQL_INSERT =
             "insert into itis_user(email, name, password, state, confirm_code, role, created_at, avatar, phone_number) values (?,?,?,?,?,?,?,?,?)";
 
@@ -137,5 +141,15 @@ public class UsersRepositoryImpl implements UsersRepository {
     @Override
     public List<User> findAll() {
         return null;
+    }
+
+    @Override
+    public Optional<User> findByRole(Role role) {
+        try {
+            User user = jdbcTemplate.queryForObject(SQL_SELECT_BY_ROLE, new Object[]{role.toString()}, userRowMapper);
+            return Optional.of(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 }
