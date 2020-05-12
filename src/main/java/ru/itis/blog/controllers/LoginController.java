@@ -3,6 +3,7 @@ package ru.itis.blog.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itis.blog.dto.LoginDto;
@@ -24,20 +25,8 @@ public class LoginController {
     private LoginTokenService loginService;
 
     @GetMapping
-    public ModelAndView getLoginPage(Authentication authentication){
-        if (authentication != null) {
-            return new ModelAndView("redirect:/profile");
-        }
-        return new ModelAndView("login");
+    public String getLoginPage() {
+        return "login";
     }
-
-    @PostMapping
-    public ModelAndView login(HttpServletResponse response, LoginDto loginDto) throws IOException {
-        TokenDto tokenDto = loginService.login(loginDto);
-        Cookie cookie = new Cookie("MyToken", tokenDto.getToken());
-        response.addCookie(cookie);
-        return new ModelAndView("redirect:/profile");
-    }
-
 
 }

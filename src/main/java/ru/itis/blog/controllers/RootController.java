@@ -14,9 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class RootController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView getStarter(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null){
+    public ModelAndView getStarter(Authentication authentication) {
+        if (authentication != null) {
             return new ModelAndView("redirect:/profile");
         }
         return new ModelAndView("redirect:/login");

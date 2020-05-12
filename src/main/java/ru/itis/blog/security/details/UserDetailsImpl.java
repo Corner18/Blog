@@ -14,33 +14,20 @@ import java.util.Collections;
 public class UserDetailsImpl implements UserDetails {
     private User user;
 
+    public UserDetailsImpl(User user) {
+        this.user = user;
+    }
+
     public User getUser() {
         return user;
     }
 
-    private Long userId;
-    private String role;
-    private String name;
-
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
-        return Collections.singletonList(authority);
+        String authority = user.getRole().toString();
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+        return Collections.singleton(simpleGrantedAuthority);
     }
-
 
     @Override
     public String getPassword() {
@@ -49,7 +36,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getEmail();
     }
 
     @Override
@@ -69,6 +56,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getState() == State.CONFIRMED;
+        return user.getState().equals(State.CONFIRMED);
     }
 }

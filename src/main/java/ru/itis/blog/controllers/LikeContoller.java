@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,14 +23,13 @@ public class LikeContoller {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/like/{post_id}")
-    public ModelAndView makeLike(@RequestParam("post_id") Long postId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+    public String makeLike(@RequestParam("post_id") Long postId, Authentication authentication, Model model) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         LikeDto form = LikeDto.builder()
                 .post_id(postId)
-                .user_id(userDetails.getUserId())
+                .user_id(userDetails.getUser().getId())
                 .build();
         likeService.makeLike(form);
-        return new ModelAndView("redirect:/post/" + postId);
+        return "redirect:/post/" + postId;
     }
 }

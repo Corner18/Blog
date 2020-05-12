@@ -23,15 +23,11 @@ public class AddingPostRestController {
     @Autowired
     private AddPostService addPostService;
 
-    @Autowired
-    private UsersService usersService;
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        addPostService.save(postDto, userDetails.getUserId());
+    public ResponseEntity<?> addPost(@RequestBody PostDto postDto, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        addPostService.save(postDto, userDetails.getUser().getId());
         return ResponseEntity.accepted().build();
     }
 }

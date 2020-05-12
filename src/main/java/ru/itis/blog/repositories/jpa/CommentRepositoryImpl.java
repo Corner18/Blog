@@ -21,8 +21,8 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     @Transactional
     public List<Comment> getAllByPost_Id(Long post_id) {
-        List<Comment> comments= entityManager.createQuery(SQL_SELECT_BY_POST_ID)
-                .setParameter(1,post_id)
+        List<Comment> comments = entityManager.createQuery(SQL_SELECT_BY_POST_ID)
+                .setParameter(1, post_id)
                 .getResultList();
         return comments;
     }

@@ -32,60 +32,48 @@ public class ChatController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/support/{receiver:.+}")
-    public ModelAndView getChatPage(@PathVariable("receiver") String receiver) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        Map<String, Object> map = new HashMap<>();
-        map.put("user", user);
-        map.put("admin", user.getEmail());
-        map.put("receiver", receiver);
-        map.put("messages", messageService.getDialogue(receiver, user.getEmail()));
-        List<MessageDto> messageDtos = messageService.getBySenderAndReceiver(user.getEmail(),receiver);
-        if(messageDtos.isEmpty()){
-            map.put("pageId",UUID.randomUUID().toString());
-        } else{
-            map.put("pageId",messageDtos.get(0).getPageId());
+    public String getChatPage(@PathVariable("receiver") String receiver, Model model, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("user", userDetails.getUser());
+        model.addAttribute("admin", userDetails.getUsername());
+        model.addAttribute("receiver", receiver);
+        model.addAttribute("messages",messageService.getDialogue(receiver, userDetails.getUsername()));
+        List<MessageDto> messageDtos = messageService.getBySenderAndReceiver(userDetails.getUsername(), receiver);
+        if (messageDtos.isEmpty()) {
+            model.addAttribute("pageId", UUID.randomUUID().toString());
+        } else {
+            model.addAttribute("pageId", messageDtos.get(0).getPageId());
         }
-        map.put("sender", user.getEmail());
-
-        return new ModelAndView("support", map);
+        model.addAttribute("sender", userDetails.getUsername());
+        return "support";
     }
 
     @GetMapping("/support")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView getChat() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        Map<String, Object> map = new HashMap<>();
-        map.put("user", user);
-        map.put("admin", usersService.getAdmin().getEmail());
-        map.put("messages", messageService.getDialogue(user.getEmail(), usersService.getAdmin().getEmail()));
-        map.put("receiver", usersService.getAdmin().getEmail());
-        List<MessageDto> messageDtos = messageService.getBySenderAndReceiver(user.getEmail(),usersService.getAdmin().getEmail());
-       if(messageDtos.isEmpty()){
-            map.put("pageId",UUID.randomUUID().toString());
-       } else{
-           map.put("pageId",messageDtos.get(0).getPageId());
-       }
-        map.put("sender", user.getEmail() );
-        return new ModelAndView("support", map);
-
+    public String getChat(Authentication authentication, Model model) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("user", userDetails.getUser());
+        model.addAttribute("admin", usersService.getAdmin().getEmail());
+        model.addAttribute("messages", messageService.getDialogue(userDetails.getUsername(), usersService.getAdmin().getEmail()));
+        model.addAttribute("receiver", usersService.getAdmin().getEmail());
+        List<MessageDto> messageDtos = messageService.getBySenderAndReceiver(userDetails.getUsername(), usersService.getAdmin().getEmail());
+        if (messageDtos.isEmpty()) {
+            model.addAttribute("pageId", UUID.randomUUID().toString());
+        } else {
+            model.addAttribute("pageId", messageDtos.get(0).getPageId());
+        }
+        model.addAttribute("sender", userDetails.getUsername());
+        return "support";
     }
 
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ModelAndView getDialoguesList(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        Map<String, Object> map = new HashMap<>();
-        map.put("user", user);
-        map.put("dialogues", messageService.getEmailsForAdminPage(user.getEmail()));
-
-        return new ModelAndView("dialogues", map);
+    public String getDialoguesList(Model model, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("user", userDetails.getUser());
+        model.addAttribute("dialogues", messageService.getEmailsForAdminPage(userDetails.getUsername()));
+        return "dialogues";
     }
 
 }

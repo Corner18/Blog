@@ -8,9 +8,19 @@ body {
     width: 100px;
 }
 
-.post-images {width:100%;}
-.car-image-block {padding:0px;margin:0px;}
-.car-image-block img {min-height: 200px; overflow: hidden;}
+.post-images {
+    width: 100%;
+}
+
+.car-image-block {
+    padding: 0px;
+    margin: 0px;
+}
+
+.car-image-block img {
+    min-height: 200px;
+    overflow: hidden;
+}
 
 
 .form-control-borderless {

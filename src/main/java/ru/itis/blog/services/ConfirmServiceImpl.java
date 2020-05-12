@@ -17,7 +17,7 @@ public class ConfirmServiceImpl implements ConfirmService {
     @Override
     public void confirm(String token) {
         Optional<User> userOptional = usersRepository.findByConfirmCode(token);
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setState(State.CONFIRMED);
             usersRepository.update(user);

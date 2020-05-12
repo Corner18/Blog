@@ -30,25 +30,23 @@ public class StorageController {
     private UsersService usersService;
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/storage", method = RequestMethod.GET)
+    @GetMapping("/storage")
     public ModelAndView getStoragePage() {
         return new ModelAndView("file_upload");
     }
 
 
-    @RequestMapping(value = "/files", method = RequestMethod.POST)
+    @GetMapping("/files")
     @ResponseBody
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        service.saveFile(file, user);
+    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        service.saveFile(file, userDetails.getUser());
         return new ModelAndView("redirect:/profile");
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/files/{file-name:.+}", method = RequestMethod.GET)
+    @GetMapping("/files/{file-name:.+}")
     public void getFile(@PathVariable("file-name") String fileName,
                         HttpServletResponse response) {
         service.writeFileToResponse(fileName, response);

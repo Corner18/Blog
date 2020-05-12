@@ -74,7 +74,7 @@ public class MessageRepositoryImpl implements MessageRepository {
 
     @Override
     public List<Message> getAllBySender_EmailAndReceiver_Email(String senderEmail, String receiverEmail) {
-        return jdbcTemplate.query(SQL_SELECT_BY_SENDER_AND_RECEIVER, new Object[]{senderEmail,receiverEmail}, messageRowMapper);
+        return jdbcTemplate.query(SQL_SELECT_BY_SENDER_AND_RECEIVER, new Object[]{senderEmail, receiverEmail}, messageRowMapper);
     }
 
     @Override

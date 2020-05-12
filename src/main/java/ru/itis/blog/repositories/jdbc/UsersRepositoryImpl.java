@@ -100,7 +100,7 @@ public class UsersRepositoryImpl implements UsersRepository {
                     ps.setString(6, user.getRole().toString());
                     ps.setTimestamp(7, user.getCreatedAt());
                     ps.setString(8, user.getAvatar());
-                    ps.setString(9,user.getPhoneNumber());
+                    ps.setString(9, user.getPhoneNumber());
                     return ps;
                 }, keyHolder);
 

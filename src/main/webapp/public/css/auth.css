@@ -1,4 +1,4 @@
-body{
+body {
     background-color: #edeff2;
 }
 
@@ -7,7 +7,7 @@ body{
     align-content: center;
 }
 
-.text-center.border.border-light.p-5{
+.text-center.border.border-light.p-5 {
     background-color: #f8fafd;
     margin-top: 50px;
     border-radius: 5px;
@@ -18,18 +18,19 @@ body{
     margin-right: 10%;
     width: 275px;
 }
-.btn.btn-info.btn-block.my-4{
+
+.btn.btn-info.btn-block.my-4 {
     background-color: #126220;
     border-color: #126220;
 }
 
-.nav-signature{
+.nav-signature {
     font-weight: 400;
     font-family: Georgia, cursive;
     font-size: 40px;
 }
 
-.container{
+.container {
     margin-top: 20px;
 }
 

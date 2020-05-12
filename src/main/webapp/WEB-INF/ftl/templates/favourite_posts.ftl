@@ -35,6 +35,7 @@
 
 
                             <div class="col-md-4 car-image-block">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                 <li><a href="/post/${post.id}" class="list">${post.header}</a></li>
                             </div>
 
@@ -47,7 +48,6 @@
             </div>
         </div>
     </div>
-
 
 
     </body>

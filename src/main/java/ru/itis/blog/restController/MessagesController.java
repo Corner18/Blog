@@ -28,7 +28,6 @@ public class MessagesController {
 
         messageService.save(message);
         for (String key : messages.keySet()) {
-            // наверно можно было сделать это изящнее, но мне надоело
             if ((messageService.getBySenderAndReceiver(message.getReceiver(), message.getSender()).get(0).getPageId().equals(key)) ||
                     (messageService.getBySenderAndReceiver(message.getSender(), message.getReceiver()).get(0).getPageId().equals(key)))
                 synchronized (messages.get(key)) {

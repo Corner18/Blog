@@ -13,7 +13,6 @@
     <body>
 
 
-
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
@@ -32,6 +31,7 @@
                     <#list posts as post>
                         <div class="row border">
                             <div class="col-md-4 car-image-block">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                 <li><a href="/post/${post.id}" class="list">${post.header}</a></li>
                             </div>
                         </div>

@@ -8,12 +8,12 @@
                 crossorigin="anonymous"></script>
         <script>
 
-            function sendMessage(text, sender, receiver,pageId) {
+            function sendMessage(text, sender, receiver, pageId) {
                 let body = {
                     'text': text,
                     'sender': sender,
                     'receiver': receiver,
-                    'pageId' : pageId
+                    'pageId': pageId
                 };
 
                 $.ajax({
@@ -59,6 +59,7 @@
     <body onload="sendMessage('Login', '${sender}' , '${receiver}' , '${pageId}' )">
     <div>
         <input id="message" placeholder="Your message">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <button onclick="sendMessage(
                 $('#message').val(), '${sender}' , '${receiver}' , '${pageId}' )">Send
         </button>

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CommentService {
     List<CommentFreemarkerDto> userComment(Long post_id);
+
     void makeComment(CommentDto form);
+
     List<CommentDto> getComments(Long post_id);
 }

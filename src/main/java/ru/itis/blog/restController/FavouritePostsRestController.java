@@ -26,9 +26,8 @@ public class FavouritePostsRestController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<List<Post>> getFavouritePosts(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        return new ResponseEntity<>(favouritesService.favs(userDetails.getUserId()), HttpStatus.OK);
+    public ResponseEntity<List<Post>> getFavouritePosts(Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return new ResponseEntity<>(favouritesService.favs(userDetails.getUser().getId()), HttpStatus.OK);
     }
 }

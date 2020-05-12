@@ -45,6 +45,7 @@
                                 <div class="form-group">
                                     <textarea class="form-control" rows="3" name="text"></textarea>
                                 </div>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                 <button type="submit" class="btn btn-light"
                                         style="background-color: #126220; color: white ">
                                     Submit

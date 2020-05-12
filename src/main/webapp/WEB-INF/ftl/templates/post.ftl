@@ -44,6 +44,7 @@
 
                 <#if user??>
                     <form action="/like/{post.id}" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                         <input type="submit" class="btn btn-light" value="like" style="width: 100px">
                     </form>
                     <!-- Comments Form -->
@@ -52,6 +53,7 @@
                         <div class="card-body">
                             <form method="post" action="/comment/{post.id}">
                                 <div class="form-group">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                     <textarea class="form-control" rows="3" name="comment"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-light"
@@ -72,7 +74,8 @@
                                         <img class="d-flex mr-3 rounded-circle" src="${comment.avatar}" alt=""
                                              width="50" height="50">
                                     <#else>
-                                        <img class="d-flex mr-3 rounded-circle" src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt=""
+                                        <img class="d-flex mr-3 rounded-circle"
+                                             src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt=""
                                              width="50" height="50">
                                     </#if>
                                 </div>

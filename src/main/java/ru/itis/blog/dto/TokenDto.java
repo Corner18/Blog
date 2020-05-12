@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class TokenDto {
     private String token;
+
     public String getToken() {
         return token;
     }

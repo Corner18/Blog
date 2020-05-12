@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
         List<CommentFreemarkerDto> commentList = new ArrayList<>();
         CommentFreemarkerDto commentFreemarkerDto = new CommentFreemarkerDto();
         List<Comment> comments = commentRepository.getAllByPost_Id(post_id);
-        for (Comment comment : comments){
+        for (Comment comment : comments) {
             Optional<User> userOptional = usersRepository.find(comment.getUser_id());
             userOptional.ifPresent(user -> commentList.add(commentFreemarkerDto.from(comment, user)));
         }

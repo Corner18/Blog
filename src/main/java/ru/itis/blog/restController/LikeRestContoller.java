@@ -20,12 +20,11 @@ public class LikeRestContoller {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/api/like/{post_id}")
-    public ResponseEntity<?> makeLike(@PathVariable("post_id") Long post_id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+    public ResponseEntity<?> makeLike(@PathVariable("post_id") Long post_id, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         LikeDto likeDto = LikeDto.builder()
                 .post_id(post_id)
-                .user_id(userDetails.getUserId())
+                .user_id(userDetails.getUser().getId())
                 .build();
         likeService.makeLike(likeDto);
         return ResponseEntity.accepted().build();

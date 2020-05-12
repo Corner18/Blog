@@ -28,11 +28,9 @@ public class StorageRestController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        service.saveFile(file, user);
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        service.saveFile(file, userDetails.getUser());
         return ResponseEntity.accepted().build();
     }
 

@@ -22,8 +22,8 @@ public class LikeRepositoryImpl implements LikeRepository {
     @Override
     @Transactional
     public List<Likes> getAllByUser_Id(Long user_id) {
-        List<Likes> likes= entityManager.createQuery(SQL_SELECT_BY_USER_ID)
-                .setParameter(1,user_id)
+        List<Likes> likes = entityManager.createQuery(SQL_SELECT_BY_USER_ID)
+                .setParameter(1, user_id)
                 .getResultList();
         return likes;
     }

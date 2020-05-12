@@ -34,7 +34,7 @@ public class LoginTokenServiceImpl implements LoginTokenService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if ((passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) &&
-                    (user.getState().equals(State.CONFIRMED))){
+                    (user.getState().equals(State.CONFIRMED))) {
                 String token = Jwts.builder()
                         .setSubject(user.getId().toString())
                         .claim("name", user.getName())

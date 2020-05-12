@@ -58,10 +58,10 @@ public class MessageServiceImpl implements MessageService {
     public Map<String, List<MessageDto>> map() {
         List<Message> messages = messageRepository.distinct();
         Map<String, List<MessageDto>> map = new HashMap<>();
-        for (Message message : messages){
+        for (Message message : messages) {
             List<MessageDto> messageDtos = new ArrayList<>();
             messageDtos.add(MessageDto.from(message));
-            map.put(message.getPage_id(),messageDtos );
+            map.put(message.getPage_id(), messageDtos);
         }
         return map;
     }

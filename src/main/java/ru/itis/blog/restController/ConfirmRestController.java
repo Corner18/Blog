@@ -18,7 +18,7 @@ public class ConfirmRestController {
 
     @GetMapping("/{token}")
     public ResponseEntity<?> confirm(@PathVariable("token") String token) {
-        if( token!= null) {
+        if (token != null) {
             confirmService.confirm(token);
             return ResponseEntity.accepted().build();
         }

@@ -1,8 +1,6 @@
 package ru.itis.blog.services;
 
 
-
-
 import ru.itis.blog.models.User;
 
 import java.util.List;

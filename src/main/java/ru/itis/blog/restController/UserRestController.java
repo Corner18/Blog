@@ -6,14 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.blog.models.User;
 
 import ru.itis.blog.security.details.UserDetailsImpl;
 import ru.itis.blog.services.FileStorageService;
 import ru.itis.blog.services.UsersService;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -28,10 +32,9 @@ public class UserRestController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<User> getSelf() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<User> getSelf(Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return new ResponseEntity<>(userDetails.getUser(), HttpStatus.OK);
     }
+
 }

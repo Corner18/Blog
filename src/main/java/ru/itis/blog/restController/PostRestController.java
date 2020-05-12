@@ -36,11 +36,10 @@ public class PostRestController {
     public ResponseEntity<Map<Post, List<CommentDto>>> getPostPage(@PathVariable("post_id") Long post_id) {
         Post post = postService.getOne(post_id);
         List<CommentDto> comments = commentService.getComments(post_id);
-        Map<Post,List<CommentDto>> map = new HashMap<>();
-        map.put(post,comments);
+        Map<Post, List<CommentDto>> map = new HashMap<>();
+        map.put(post, comments);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
 
 
 }

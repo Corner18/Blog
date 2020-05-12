@@ -7,7 +7,9 @@ import java.util.Optional;
 
 public interface UsersRepository extends CRUDRepository<User, Long> {
     Optional<User> findByEmail(String email);
+
     Optional<User> findByConfirmCode(String token);
+
     Optional<User> findByRole(Role role);
 
 }

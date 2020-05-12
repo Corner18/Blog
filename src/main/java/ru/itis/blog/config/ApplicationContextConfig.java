@@ -3,10 +3,7 @@ package ru.itis.blog.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,7 +32,7 @@ import java.util.concurrent.Executors;
 @EnableAspectJAutoProxy
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
-@Component
+@ComponentScan(basePackages = {"ru.itis.blog"})
 public class ApplicationContextConfig {
 
     @Autowired
@@ -63,7 +60,7 @@ public class ApplicationContextConfig {
 
 
     @Bean
-    public ExecutorService threadPool(){
+    public ExecutorService threadPool() {
         return Executors.newCachedThreadPool();
     }
 
@@ -85,12 +82,12 @@ public class ApplicationContextConfig {
     }
 
     @Bean
-    public MultipartResolver multipartResolver(){
+    public MultipartResolver multipartResolver() {
         return new CommonsMultipartResolver();
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -107,10 +104,9 @@ public class ApplicationContextConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
-
         return transactionManager;
     }
 
@@ -119,6 +115,7 @@ public class ApplicationContextConfig {
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
         properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("spring.datasource.initialization-mode","always");
         return properties;
     }
 

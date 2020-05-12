@@ -5,14 +5,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 public class RegistrationDto {
+    @NotNull
+    @NotBlank
     private String name;
-    private String email;
-    private String password;
+
+    @NotNull
+    @NotBlank
     private String phoneNumber;
+
+    @Email
+    @NotBlank
+    private String email;
+
+    @NotNull
+    @NotBlank
+    private String password;
+
 }
 

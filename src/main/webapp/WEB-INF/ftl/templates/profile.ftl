@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="/public/css/profile.css" type="text/css">
     <meta charset="UTF-8">
     <body>
+    <style>
+        .error {
+            color: #ff0000;
+        }
+    </style>
+
 
     <div class="container">
         <div class="row">
@@ -15,7 +21,8 @@
                     <img src="${user.avatar}" width="300" height="150"
                          alt="" class="img-rounded">
                 <#else>
-                    <img class="d-flex mr-3 rounded-circle" src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt=""
+                    <img class="d-flex mr-3 rounded-circle"
+                         src="https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png" alt=""
                          width="50" height="50">
                 </#if>
 
@@ -29,6 +36,7 @@
                             <a href="/storage">Let's do it</a>
                         </h5>
                         <div class="row second">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                             <a href="/favourites" class="btn btn-primary">Favourite posts</a>
                         </div>
                     </#if>
@@ -38,6 +46,7 @@
             </div>
         </div>
     </div>
+
     </body>
 </#macro>
 <@main/>

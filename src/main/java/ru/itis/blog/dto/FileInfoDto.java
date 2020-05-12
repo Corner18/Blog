@@ -15,7 +15,7 @@ public class FileInfoDto {
     private String storageFileName;
     private Long userId;
 
-    public FileInfoDto(FileInfo fileInfo){
+    public FileInfoDto(FileInfo fileInfo) {
         FileInfoDto.builder()
                 .id(fileInfo.getId())
                 .storageFileName(fileInfo.getStorageFileName())

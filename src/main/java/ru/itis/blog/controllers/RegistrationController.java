@@ -1,24 +1,17 @@
 package ru.itis.blog.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import ru.itis.blog.dto.RegistrationDto;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+
+import ru.itis.blog.dto.RegistrationDto;
 import ru.itis.blog.services.RegistrationService;
 
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
@@ -28,18 +21,25 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @GetMapping
-        public ModelAndView getRegistrationPage(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            return new ModelAndView("redirect:/profile");
+    public String reg(Authentication authentication, Model model) {
+        if(authentication != null) {
+            return "redirect:/profile";
+        }else{
+            model.addAttribute("r", new RegistrationDto());
+            return "registration";
         }
-        return new ModelAndView("registration");
     }
 
     @PostMapping
-    public ModelAndView registration(RegistrationDto form) {
-        registrationService.registration(form);
-        return new ModelAndView("redirect:/login");
+    public String reg(@Valid @ModelAttribute("r")RegistrationDto form, BindingResult bindingResult, Model model) {
+        System.out.println(form);
+        System.out.println(bindingResult.getAllErrors());
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("r", form);
+            return "registration";
+        }else {
+            registrationService.registration(form);
+            return "login";
+        }
     }
-
 }

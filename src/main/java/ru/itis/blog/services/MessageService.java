@@ -9,8 +9,12 @@ import java.util.Set;
 
 public interface MessageService {
     void save(MessageDto messageDto);
+
     List<MessageDto> getDialogue(String email1, String email2);
+
     Set<String> getEmailsForAdminPage(String adminEmail);
+
     List<MessageDto> getBySenderAndReceiver(String sender, String receiver);
+
     Map<String, List<MessageDto>> map();
 }

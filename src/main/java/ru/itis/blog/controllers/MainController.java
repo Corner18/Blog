@@ -30,16 +30,10 @@ public class MainController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/main")
-    public ModelAndView mainPage() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        List<Post> postList = mainService.getAll();
-        Map<String, Object> params = new HashMap<>();
-        params.put("posts", postList);
-        params.put("user", userDetails.getUser());
-        return new ModelAndView("posts",params );
-
-
+    public String mainPage(Authentication authentication, Model model) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("posts", mainService.getAll());
+        model.addAttribute("user", userDetails.getUser());
+        return "posts";
     }
 }

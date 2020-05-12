@@ -39,15 +39,12 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/{post_id}")
-    public ModelAndView getPostPage(@PathVariable("post_id") Long post_id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        Map<String, Object> params = new HashMap<>();
-        params.put("comments", commentService.userComment(post_id));
-        params.put("user", user);
-        params.put("post", postService.getOne(post_id));
-        return new ModelAndView("post", params);
+    public String getPostPage(@PathVariable("post_id") Long post_id, Authentication authentication, Model model) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("comments", commentService.userComment(post_id));
+        model.addAttribute("user", userDetails.getUser());
+        model.addAttribute("post", postService.getOne(post_id));
+        return "post";
 
     }
 

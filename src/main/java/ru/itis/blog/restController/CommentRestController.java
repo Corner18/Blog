@@ -21,13 +21,12 @@ public class CommentRestController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/api/comment/{post_id}")
-    public ResponseEntity<?> makeComment(@RequestParam(value = "text") String text, @PathVariable("post_id") Long post_id){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+    public ResponseEntity<?> makeComment(@RequestParam(value = "text") String text, @PathVariable("post_id") Long post_id, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         CommentDto commentDto = CommentDto.builder()
                 .comment(text)
                 .post_id(post_id)
-                .user_id(userDetails.getUserId())
+                .user_id(userDetails.getUser().getId())
                 .build();
         commentService.makeComment(commentDto);
         return ResponseEntity.accepted().build();

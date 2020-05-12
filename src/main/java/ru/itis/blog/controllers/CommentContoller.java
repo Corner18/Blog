@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,12 +23,11 @@ public class CommentContoller {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/comment/{post_id}")
-    public ModelAndView makeComment(CommentDto form, @RequestParam("post_id") Long postId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        form.setUser_id(userDetails.getUserId());
+    public String makeComment(CommentDto form, @RequestParam("post_id") Long postId, Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        form.setUser_id(userDetails.getUser().getId());
         form.setPost_id(postId);
         commentService.makeComment(form);
-        return new ModelAndView("redirect:/post/" + postId);
+        return "redirect:/post/";
     }
 }

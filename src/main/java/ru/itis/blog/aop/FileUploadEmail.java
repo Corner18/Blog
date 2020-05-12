@@ -16,9 +16,6 @@ import java.util.Optional;
 public class FileUploadEmail {
 
     @Autowired
-    private FileStorageService fileStorageService;
-
-    @Autowired
     private FileInfoRepository fileInfoRepository;
 
     @Autowired

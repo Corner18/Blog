@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,22 +15,23 @@ import java.util.Objects;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({ "ru.itis.blog"})
+@ComponentScan({"ru.itis.blog"})
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
-    public FreeMarkerViewResolver freemarkerViewResolver() {
+    public ViewResolver viewResolver() {
         FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setCache(true);
-        resolver.setPrefix("/templates/");
+        resolver.setPrefix("");
         resolver.setSuffix(".ftl");
+        resolver.setCache(true);
+        resolver.setContentType("text/html; charset=UTF-8");
         return resolver;
     }
 
     @Bean
-    public FreeMarkerConfigurer freemarkerConfig(FreeMarkerConfigurationFactoryBean configurationFactoryBean) {
+    public FreeMarkerConfigurer freemarkerConfig() {
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
-        freeMarkerConfigurer.setConfiguration(Objects.requireNonNull(configurationFactoryBean.getObject()));
+        freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/ftl/templates/");
         return freeMarkerConfigurer;
     }
 

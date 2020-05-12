@@ -27,14 +27,14 @@
                 dataType: "json",
                 complete: function () {
 
-                    receiveMessage(sender,receiver)
+                    receiveMessage(sender, receiver)
 
                 }
             });
         }
 
         // LONG POLLING
-        function receiveMessage(sender,receiver) {
+        function receiveMessage(sender, receiver) {
             $.ajax({
                 url: "/messages?pageId=" + pageId,
                 method: "GET",

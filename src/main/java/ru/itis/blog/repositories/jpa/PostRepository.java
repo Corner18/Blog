@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface PostRepository {
     void save(Post post);
+
     List<Post> findAll();
+
     Post findById(Long id);
 }

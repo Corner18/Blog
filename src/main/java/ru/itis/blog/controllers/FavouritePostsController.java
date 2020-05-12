@@ -30,15 +30,11 @@ public class FavouritePostsController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/favourites")
-    public ModelAndView getFavourites() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
-        User user = usersService.getUser(userDetails.getUserId());
-        List<Post> postList = favouritesService.favs(user.getId());
-        Map<String, Object> params = new HashMap<>();
-        params.put("posts", postList);
-        params.put("user", user);
-        return new ModelAndView("favourite_posts", params);
+    public String getFavourites(Authentication authentication, Model model) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        model.addAttribute("posts", favouritesService.favs(userDetails.getUser().getId()));
+        model.addAttribute("user", userDetails.getUser());
+        return "favourite_posts";
     }
 
 

@@ -6,8 +6,11 @@ import java.util.List;
 
 public interface MessageRepository extends CRUDRepository<Message, Long> {
     List<Message> getAllByReceiver_Email(String email);
+
     List<Message> getAllBySender_Email(String email);
+
     List<Message> getAllBySender_EmailAndReceiver_Email(String senderEmail, String receiverEmail);
+
     List<Message> distinct();
 
 }

@@ -19,7 +19,7 @@ public class MainRestController {
     private MainService mainService;
 
     @GetMapping
-    public ResponseEntity<List<Post>> getPosts(){
+    public ResponseEntity<List<Post>> getPosts() {
         return new ResponseEntity<>(mainService.getAll(), HttpStatus.OK);
     }
 }
