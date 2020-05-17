@@ -16,6 +16,8 @@ import ru.itis.blog.security.details.UserDetailsImpl;
 import ru.itis.blog.services.AddPostService;
 import ru.itis.blog.services.UsersService;
 
+import javax.persistence.PostPersist;
+
 @Controller
 @RequestMapping("/add")
 public class AddingPostController {
@@ -23,12 +25,14 @@ public class AddingPostController {
     @Autowired
     private AddPostService addPostService;
 
+    @GetMapping
     public String getAddingPage(Model model, Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         model.addAttribute("user", userDetails.getUser());
         return "add";
     }
 
+    @PostMapping
     public String addPost(PostDto postDto, Model model, Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         addPostService.save(postDto, userDetails.getUser().getId());

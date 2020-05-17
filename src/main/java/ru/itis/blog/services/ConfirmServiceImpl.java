@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.itis.blog.models.State;
 import ru.itis.blog.models.User;
-import ru.itis.blog.repositories.jdbc.UsersRepository;
+import ru.itis.blog.repositories.jpa.UsersRepository;
 
 import java.util.Optional;
 

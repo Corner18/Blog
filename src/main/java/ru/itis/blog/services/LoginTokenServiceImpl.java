@@ -11,7 +11,7 @@ import ru.itis.blog.dto.LoginDto;
 import ru.itis.blog.dto.TokenDto;
 import ru.itis.blog.models.State;
 import ru.itis.blog.models.User;
-import ru.itis.blog.repositories.jdbc.UsersRepository;
+import ru.itis.blog.repositories.jpa.UsersRepository;
 
 
 import java.util.Optional;

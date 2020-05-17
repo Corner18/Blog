@@ -11,7 +11,7 @@ import ru.itis.blog.dto.RegistrationDto;
 import ru.itis.blog.models.Role;
 import ru.itis.blog.models.State;
 import ru.itis.blog.models.User;
-import ru.itis.blog.repositories.jdbc.UsersRepository;
+import ru.itis.blog.repositories.jpa.UsersRepository;
 
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .email(form.getEmail())
                 .password(hashPassword)
                 .name(form.getName())
-                .createdAt(Timestamp.valueOf(LocalDateTime.now()))
+                .createdAt(LocalDateTime.now())
                 .state(State.NOT_CONFIRMED)
                 .confirmCode(UUID.randomUUID().toString())
                 .role(Role.USER)

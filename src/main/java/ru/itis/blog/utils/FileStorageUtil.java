@@ -43,7 +43,7 @@ public class FileStorageUtil {
     }
 
     private String getUrlOfFile(String storageFileName) {
-        return storagePath + "/" + storageFileName;
+        return storagePath  + storageFileName;
     }
 
 

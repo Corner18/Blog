@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.itis.blog.models.User;
 import ru.itis.blog.security.details.UserDetailsImpl;
 import ru.itis.blog.services.UsersService;
 
@@ -21,7 +22,8 @@ public class UserController {
     @GetMapping
     public String getUsersProfile(Model model, Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        model.addAttribute("user", userDetails.getUser());
+        User user = usersService.getUser(userDetails.getUser().getId());
+        model.addAttribute("user", user);
         return "profile";
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.itis.blog.dto.MessageDto;
 import ru.itis.blog.models.Message;
 import ru.itis.blog.repositories.jdbc.MessageRepository;
-import ru.itis.blog.repositories.jdbc.UsersRepository;
+import ru.itis.blog.repositories.jpa.UsersRepository;
 
 import java.util.*;
 

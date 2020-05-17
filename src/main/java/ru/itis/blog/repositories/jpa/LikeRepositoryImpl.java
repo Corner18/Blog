@@ -1,7 +1,6 @@
 package ru.itis.blog.repositories.jpa;
 
 import org.springframework.stereotype.Component;
-import ru.itis.blog.models.Comment;
 import ru.itis.blog.models.Likes;
 
 import javax.persistence.EntityManager;

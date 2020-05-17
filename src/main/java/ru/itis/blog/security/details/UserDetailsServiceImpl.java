@@ -1,13 +1,12 @@
 package ru.itis.blog.security.details;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.itis.blog.models.User;
-import ru.itis.blog.repositories.jdbc.UsersRepository;
+import ru.itis.blog.repositories.jpa.UsersRepository;
 
 
 import java.util.Optional;

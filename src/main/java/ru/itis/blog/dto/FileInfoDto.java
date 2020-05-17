@@ -19,7 +19,7 @@ public class FileInfoDto {
         FileInfoDto.builder()
                 .id(fileInfo.getId())
                 .storageFileName(fileInfo.getStorageFileName())
-                .userId(fileInfo.getUserId())
+                .userId(fileInfo.getUser().getId())
                 .build();
     }
 }

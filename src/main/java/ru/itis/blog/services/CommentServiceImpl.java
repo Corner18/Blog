@@ -6,7 +6,7 @@ import ru.itis.blog.dto.CommentDto;
 import ru.itis.blog.dto.CommentFreemarkerDto;
 import ru.itis.blog.models.Comment;
 import ru.itis.blog.models.User;
-import ru.itis.blog.repositories.jdbc.UsersRepository;
+import ru.itis.blog.repositories.jpa.UsersRepository;
 import ru.itis.blog.repositories.jpa.CommentRepository;
 import ru.itis.blog.repositories.jpa.PostRepository;
 

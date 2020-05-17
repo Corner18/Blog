@@ -34,10 +34,5 @@ public class StorageRestController {
         return ResponseEntity.accepted().build();
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/{file-name:.+}")
-    public ResponseEntity<FileInfoDto> getFileInfoDto(@PathVariable("file-name") String fileName) {
-        FileInfoDto fileInfoDto = service.getFileInfo(fileName);
-        return new ResponseEntity<>(fileInfoDto, HttpStatus.OK);
-    }
+
 }

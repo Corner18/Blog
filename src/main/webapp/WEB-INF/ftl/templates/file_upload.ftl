@@ -3,7 +3,7 @@
 <#macro content>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"
           type="text/css">
-    <link rel="stylesheet" href="/public/css/auth.css" type="text/css">
+    <link rel="stylesheet" href="css/auth.css" type="text/css">
     <main class="my-form">
         <div class="cotainer">
             <div class="row justify-content-center">
@@ -14,10 +14,11 @@
                             <div class="feed-container">
                                 <div class="feed">
                                     <h1>Files</h1>
-                                    <form action="/files" class="col-md-4 col-form-label text-md-right" method="post"
+                                    <form action="/files?${_csrf.parameterName}=${_csrf.token}" class="col-md-4 col-form-label text-md-right" method="post"
                                           name="data" id="data" enctype="multipart/form-data">
                                         <div id="namer" class="col-md-4 col-form-label text-md-right">
                                             <div id="namer-input" class="col-md-4 col-form-label text-md-right">
+                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                                                 <input type="file" id="file" name="file"/>
                                             </div>
                                         </div>
